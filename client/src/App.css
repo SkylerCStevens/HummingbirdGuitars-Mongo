@@ -41,13 +41,26 @@ select {
 .btn {
   font-size: 18px;
 }
+.login-btn, .signup-btn, .submit{
+  box-shadow: 1px 2px darkslategray;
+  background-color: rgb(0, 137, 148);
+}
+.signup-link{
+  color: rgb(0, 137, 148);
+}
+.signup-link:hover{
+  color: rgb(0, 75, 75);
+}
+.login-btn, .signup-btn{
+  margin: 0 41%;
+}
 /* Styling for nav */
 .submit,
 .btn:hover,
 .btn.active {
   background-color: rgb(0, 137, 148);
 }
-.submit:hover {
+.submit:hover, .login-btn:hover, .signup-btn:hover {
   background-color: rgb(0, 75, 75);
 }
 .btn:focus {
