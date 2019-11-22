@@ -26,10 +26,11 @@ class ProductsPage extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (
       prevState.brand !== this.state.brand ||
-      prevState.type !== this.state.type
+      prevState.type !== this.state.type ||
+      prevState.pirces !== this.state.prices
     ) {
       fetch(
-        `/api/products/filter/${this.state.type}/${this.state.brand}`,
+        `/api/products/filter/${this.state.type}/${this.state.brand}/${this.state.prices.low}/${this.state.prices.high}`,
         {
           method: "GET"
         }
@@ -96,7 +97,7 @@ class ProductsPage extends Component {
                   <option value="electric">Electric Guitar</option>
                   <option value="acoustic">Acoustic Guitar</option>
                 </select>
-                {/*
+
                 <select
                   name="prices"
                   className="ml-3 form-control product-select"
@@ -113,7 +114,7 @@ class ProductsPage extends Component {
                   <option value="1000 2999.99">$1000-$2999</option>
                   <option value="3000 5000.99">$3000-$5000</option>
                   <option value="5001">More than $5000</option>
-    </select> */}
+                </select>
 
                 <select
                   name="brand"

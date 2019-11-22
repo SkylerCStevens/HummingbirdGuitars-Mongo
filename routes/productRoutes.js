@@ -24,7 +24,7 @@ router.post("/new", async (req, res) => {
 });
 
 //http://localhost:4000/api/product/filter/electric/fender/900/1000
-router.get("/filter/:type/:brand", async (req, res) => {
+router.get("/filter/:type/:brand/:pricelow/:pricehigh", async (req, res) => {
     const type = req.params.type; //define req.params.type passed through url as type
     const brand = req.params.brand; //define req.params.brand passed through url as brand
     const priceLow = req.params.pricelow; //define req.params.pricelow passed through url as priceLow
@@ -41,10 +41,11 @@ router.get("/filter/:type/:brand", async (req, res) => {
     if (type !== ANY) {
       qryObj.productType = type;
     }
-    // qryStr = `{${qryStr}}`;
-    // qryStr = qryStr.parse()
-    // console.log(qryStr)
-    //Connect to mySQL database and send the qryStr passing in the paramArr for what to filter for and send the result as a response
+
+    if(priceLow !== ANY){
+      qryObj.price = {$gt: priceLow, $lt: priceHigh}
+    }
+
     try{
       console.log(qryObj)
       const products = await Product.find(qryObj)
