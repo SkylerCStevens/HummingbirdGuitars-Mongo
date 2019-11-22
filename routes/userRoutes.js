@@ -1,40 +1,19 @@
-const router = require("express").Router();
-const User = require('../models/user.model');
-const signToken = require('../auth').signToken
+const express = require("express")
+const userCtrl = require('../controllers')
+const verifyToken = require('../auth').verifyToken
 
-router.get('/', async (req, res) => {
-    try{
-        const user = await User.find()
-        res.send(user)
-    }
-    catch(err){
-        res.status(500).json({message: err.message})
-    }
-})
+const userRouter = new express.Router()
 
-router.post('/signup', async (req, res) => {
-    try {
-        const user = await User.create(req.body)
-        const token = signToken(user)
-        res.json({success: true, message: "User created. Token attached", token})
-    }
-    catch(err){
-        res.status(500).json({message: err.message})
-    }
-})
+userRouter.route('/').get(userCtrl.index)
 
-router.post('/login', (req, res) => {
-    
-})
+userRouter.route('/').post(userCtrl.create)
 
-router.get('/:id',async (req, res) => {
-    try{
-    const user = await User.findById(req.params.id)
-    res.send(user)
-    }
-    catch(err){
-        res.status(500).json({message: err.message})
-    }
-})
+userRouter.route('/authenticate').post(userCtrl.authenticate)
 
-module.exports = router; //Export the endpoints to be used in another file
+userRouter.use(verifyToken)
+
+userRouter.route('/:id').get(userCtrl.show)
+
+userRouter.route('/:id').delete(userCtrl.destroy)
+
+module.exports = userRouter
