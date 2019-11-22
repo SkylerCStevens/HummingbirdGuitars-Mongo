@@ -55,7 +55,7 @@ The client folder has a proxy for localhost:4000 (the port the server is running
 To be able to use the Mongoose connection with MongoDB you will need to save the MongoDB Atlas Url in a .env file
 
 ```bash
-ATLAS_URI='your password here'
+ATLAS_URI='your url here'
 ```
 
 ## Contributing
