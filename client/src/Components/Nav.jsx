@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import ProductsPage from "./Products";
 import Home from "./Home";
 import Contact from "./Contact";
+import Login from './Login';
+import Signup from './Signup';
+import Logout from './Logout';
+import AfterAuth from './AfterAuth';
 import { BrowserRouter, NavLink, Switch, Route } from "react-router-dom";
+import httpClient from "../httpClient";
 //Component for displaying the different components (home, products, contact)
 const Nav = () => {
+  const [currentUser, setCurrentUser] = useState(httpClient.getCurrentUser())
+
+  const onLoginSuccess = () => {
+    setCurrentUser(httpClient.getCurrentUser())
+  }
+
+  const logout = () => {
+    httpClient.logOut()
+    setCurrentUser(null)
+  }
+
   return (
     //To use react-router-dom you have to wrap the code for the links in <BrowserRouter>
     <BrowserRouter>
@@ -46,6 +62,22 @@ const Nav = () => {
                 Contact
               </NavLink>
             </li>
+            {currentUser ? <React.Fragment>
+            <li className="nav-item">
+              <NavLink exact className="btn text-white" to="/admin">
+                Users
+              </NavLink>
+            </li> 
+            <li className="nav-item">
+              <NavLink exact className="btn text-white" to="/logout">
+                Logout
+              </NavLink>
+            </li> </React.Fragment> :  <li className="nav-item">
+              <NavLink exact className="btn text-white" to="/login">
+                Login
+              </NavLink>
+            </li>
+            }
           </ul>
         </div>
       </nav>
@@ -54,6 +86,15 @@ const Nav = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/products" component={ProductsPage} />
         <Route exact path="/contactform" component={Contact} />
+        <Route exact path="/login" render={(props) => {
+          return <Login {...props} onLoginSuccess={() => onLoginSuccess()} />
+        }} />
+        <Route exact path="/logout" render={(props) => {
+						return <Logout onLogout={() => logout()} />
+					}} />
+          <Route exact path='/signup' render={(props) => {
+        return <Signup {...props} onSignUpSuccess={() => onLoginSuccess()} />}} />
+        <Route exact path={currentUser ? '/admin' : ''} component={AfterAuth} />
       </Switch>
     </BrowserRouter>
   );

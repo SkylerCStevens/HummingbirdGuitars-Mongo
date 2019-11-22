@@ -146,7 +146,7 @@ class ProductsPage extends Component {
         <div className="row products">
           {products.length >= 1 ? (
             products.map(product => (
-              <div key={product.product_id} className="product-box">
+              <div key={product._id} className="product-box">
                 <img
                   src={product.imageURL}
                   alt={product.imageALT}

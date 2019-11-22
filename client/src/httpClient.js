@@ -13,7 +13,7 @@ httpClient.setToken = (token) => {
 }
 
 httpClient.getCurrentUser = () => {
-    const token = this.getToken()
+    const token = httpClient.getToken()
 
     if(token) return jwtDecode(token)
 
@@ -21,11 +21,11 @@ httpClient.getCurrentUser = () => {
 }
 
 httpClient.logIn = (credentials) => {
-    return this({method: 'post', url: '/api/users/login', data: credentials})
+    return httpClient({method: 'post', url: '/api/users/authenticate', data: credentials})
     .then((serverResponse) => {
-        const token = serverTesponse.data.token
+        const token = serverResponse.data.token
         if(token) {
-            this.defaults.headers.common.token = this.setToken(token)
+            httpClient.defaults.headers.common.token = httpClient.setToken(token)
             return jwtDecode(token)
          } else {
              return false
@@ -34,11 +34,11 @@ httpClient.logIn = (credentials) => {
 }
 
 httpClient.signUp = (userInfo) => {
-    return this({method: 'post', url: '/api/users', data: userInfo})
+    return httpClient({method: 'post', url: '/api/users', data: userInfo})
     .then((serverResponse) => {
         const token = serverResponse.data.token
         if(token){
-            this.defaults.headers.common.token = this.setToken(token)
+            httpClient.defaults.headers.common.token = httpClient.setToken(token)
             return jwtDecode(token)
         }else {
             return false
@@ -48,7 +48,7 @@ httpClient.signUp = (userInfo) => {
 
 httpClient.logOut = () => {
     localStorage.removeItem('token')
-    delete this.defoults.headers.common.token
+    delete httpClient.defaults.headers.common.token
     return true
 }
 
