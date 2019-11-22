@@ -25,7 +25,7 @@ All the pages are made to be responsive from computer screens to small mobile sc
 
 ### Contact
 
-![Contacts](./images/contacts.png)
+![Contacts](./images/contact.png)
 
 ## Getting Started
 
