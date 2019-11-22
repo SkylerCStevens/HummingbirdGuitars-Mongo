@@ -25,10 +25,11 @@ class ProductsPage extends Component {
   //Checks if the state has changed, if it has it will fetch with a filter passing type, brand, and price through the req.params then set state with the data received back
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevState.brand !== this.state.brand
+      prevState.brand !== this.state.brand ||
+      prevState.type !== this.state.type
     ) {
       fetch(
-        `/api/products/filter/${this.state.brand}`,
+        `/api/products/filter/${this.state.type}/${this.state.brand}`,
         {
           method: "GET"
         }
@@ -82,7 +83,7 @@ class ProductsPage extends Component {
           <div className="row col-lg-8">
         <form className="form-inline top-page col-md-8 col-lg-11">
               <div className="form-group">
-               {/* <select
+               <select
                   name="type"
                   className="ml-3 form-control product-select"
                   id="guitar-type"
@@ -95,7 +96,7 @@ class ProductsPage extends Component {
                   <option value="electric">Electric Guitar</option>
                   <option value="acoustic">Acoustic Guitar</option>
                 </select>
-
+                {/*
                 <select
                   name="prices"
                   className="ml-3 form-control product-select"
