@@ -25,13 +25,10 @@ class ProductsPage extends Component {
   //Checks if the state has changed, if it has it will fetch with a filter passing type, brand, and price through the req.params then set state with the data received back
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevState.brand !== this.state.brand ||
-      prevState.type !== this.state.type ||
-      prevState.prices.low !== this.state.prices.low ||
-      prevState.prices.high !== this.state.prices.high
+      prevState.brand !== this.state.brand
     ) {
       fetch(
-        `/api/products/filter/${this.state.type}/${this.state.brand}/${this.state.prices.low}/${this.state.prices.high}`,
+        `/api/products/filter/${this.state.brand}`,
         {
           method: "GET"
         }
@@ -82,10 +79,10 @@ class ProductsPage extends Component {
       <div className="product-container">
         <div className="row mt-3 mb-2">
           <h1 className="page-header ml-3 top-page">Browse Our Guitars!</h1>
-          <div>
-            <form className="form-inline top-page col-md-8 col-lg-11">
+          <div className="row col-lg-8">
+        <form className="form-inline top-page col-md-8 col-lg-11">
               <div className="form-group">
-                <select
+               {/* <select
                   name="type"
                   className="ml-3 form-control product-select"
                   id="guitar-type"
@@ -115,7 +112,7 @@ class ProductsPage extends Component {
                   <option value="1000 2999.99">$1000-$2999</option>
                   <option value="3000 5000.99">$3000-$5000</option>
                   <option value="5001">More than $5000</option>
-                </select>
+    </select> */}
 
                 <select
                   name="brand"
@@ -127,17 +124,17 @@ class ProductsPage extends Component {
                     Brand:
                   </option>
                   <option value="any">Any</option>
-                  <option value="fender">Fender</option>
-                  <option value="squier">Squier</option>
-                  <option value="epiphone">Epiphone</option>
-                  <option value="prs">PRS</option>
-                  <option value="ibanez">Ibanez</option>
-                  <option value="martin">Martin</option>
-                  <option value="ltd">ESP/LTD</option>
-                  <option value="taylor">Taylor</option>
-                  <option value="d'angelico">D'Angelico</option>
-                  <option value="yamaha">Yamaha</option>
-                  <option value="ernie-ball">Ernie Ball</option>
+                  <option value="Fender">Fender</option>
+                  <option value="Squier">Squier</option>
+                  <option value="Epiphone">Epiphone</option>
+                  <option value="PRS">PRS</option>
+                  <option value="Ibanez">Ibanez</option>
+                  <option value="Martin">Martin</option>
+                  <option value="ESP">ESP/LTD</option>
+                  <option value="Taylor">Taylor</option>
+                  <option value="D'angelico">D'Angelico</option>
+                  <option value="Yamaha">Yamaha</option>
+                  <option value="Ernie-Ball">Ernie Ball</option>
                 </select>
               </div>
             </form>
