@@ -26,11 +26,14 @@ class Contact extends Component {
       headers: { "Content-Type": "application/json" },
       body: id
     })
-      .then(res => res.json())
-      .then(contacts => {
-        this.setState({ contacts });
+      .then(fetch("/api/contacts", {
+        method: "GET"
       })
-      .catch(console.log);
+        .then(res => res.json())
+        .then(contacts => {
+          this.setState({ contacts });
+        })
+        .catch(console.log))
   };
 
   //When the form is submitted fetch with a POST method sending back the data from the form in the body of the request then parse the data sent back and set the state with the new data
@@ -43,8 +46,15 @@ class Contact extends Component {
       method: "POST",
       body: JSON.stringify(data)
     })
-      .then(res => res.json())
-      .then(contacts => this.setState({ contacts }));
+      .then(fetch("/api/contacts", {
+        method: "GET"
+      })
+        .then(res => res.json())
+        .then(contacts => {
+          this.setState({ contacts });
+        })
+        .catch(console.log))
+
   };
 
   render() {
